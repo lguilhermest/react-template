@@ -1,12 +1,21 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import { HomePage, NotFoundPage } from "./pages";
-import { AuthProvider } from "./context";
+import { HomePage, LoginPage, NotFoundPage } from "./pages";
+import { useAuth } from "./hooks";
+import { ProtectedRoute } from "./components";
 
 function App() {
+  const { state } = useAuth();
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <HomePage />
+      element: <ProtectedRoute
+        isAuthenticated={state.isAuthenticated}
+        element={<HomePage />}
+      />
+    },
+    {
+      path: '/login',
+      element: <LoginPage />
     },
     {
       path: '*',
@@ -15,9 +24,7 @@ function App() {
   ]);
 
   return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <RouterProvider router={router} />
   )
 }
 

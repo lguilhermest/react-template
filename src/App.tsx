@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { HomePage, NotFoundPage } from "./pages";
+import { AuthProvider } from "./context";
 
 function App() {
   const router = createBrowserRouter([
@@ -14,7 +15,9 @@ function App() {
   ]);
 
   return (
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   )
 }
 
